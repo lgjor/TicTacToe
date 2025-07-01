@@ -1,6 +1,6 @@
 # Tic tac toe - Jogo da velha
 
-Segue um roteiro de alto nível, em etapas bem definidas, para você evoluir o seu engine.js (e o jogo como um todo). Você fica responsável por codificar; aqui ficam apenas os “marcos” e dependências entre eles.
+Roteiro de implementação do jogo da velha em JavaScript.
 
 ## Organização de Módulos
 
