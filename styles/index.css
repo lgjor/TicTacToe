@@ -1,0 +1,91 @@
+/* -----------------------------------
+   RESET BÁSICO
+----------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html, body {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* -----------------------------------
+   CONTAINER PRINCIPAL
+----------------------------------- */
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;   /* centra verticalmente */
+  align-items: center;       /* centra horizontalmente */
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(#f7aeb7, #ffcccc, #ffeee6);
+  font-family: sans-serif;
+  position: relative;
+}
+
+/* -----------------------------------
+   TABULEIRO
+----------------------------------- */
+.app table {
+  border-collapse: collapse;
+  table-layout: fixed;       /* força células de igual largura */
+  /* deixa a table um quadrado responsivo */
+  width: 90vmin;
+  height: 90vmin;
+  max-width: 550px;
+  max-height: 550px;
+
+   /* adicionado sombra abaixo do tabuleiro */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  border-radius: 8px; /* opcional, para arredondar cantos */
+}
+
+/* -----------------------------------
+   CÉLULAS
+----------------------------------- */
+.app .cell {
+  border: 10px solid #333;
+  /* 1:1 ratio para ser sempre quadrada */
+  aspect-ratio: 1 / 1;
+  /* ocupa 1/3 da largura do table */
+  width: 33.3333%;
+  /* conteúdo centralizado */
+  text-align: center;
+  vertical-align: middle;
+  font-size: 3rem;
+  cursor: pointer;
+  background: white;
+}
+
+/* -----------------------------------
+   OPÇÕES ABAIXO DO TABULEIRO
+----------------------------------- */
+.app p {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  background: transparent;
+}
+
+.options {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.dots, .dots2 {
+  width: 80px;
+  height: 80px;
+  border: 10px solid #333;
+}
+
+.dots {
+  background: white;
+}
+
+.dots2 {
+  background: #333;
+}
