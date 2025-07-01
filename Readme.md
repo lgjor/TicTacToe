@@ -6,15 +6,15 @@ Segue um roteiro de alto nível, em etapas bem definidas, para você evoluir o s
 
 a) engine.js
 • Estado do tabuleiro (board) e funções puras de lógica:
-– getAvailableMoves(board)
+(X) getAvailableMoves(board)
 – makeMove(board, index, player)
 – checkWin(board) → retorna Status.PLAYING | DRAW | WIN_X | WIN_O
 • Implementação do Minimax:
 – minimax(board, player) → { index, score }
 
 b) main.js
-• Inicializa variáveis globais (players, cores, turno atual)
-• Conecta handlers de clique a células e botões de opção de cor
+(X)  Inicializa variáveis globais (players, cores, turno atual)
+(X) Conecta handlers de clique a células e botões de opção de cor
 • Controla o fluxo: após jogada humana chama Minimax + atualiza tabuleiro
 • Lida com fim de jogo (exibe mensagem e bloqueia cliques)
 
