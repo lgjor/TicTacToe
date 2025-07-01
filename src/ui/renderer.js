@@ -1,15 +1,27 @@
-// TODO: Implementar a função renderBoard
-// Esta função deve atualizar a interface do usuário com base no estado atual do tabuleiro.
-function renderBoard(board){}
+// recebe um map de cores por símbolo: { P: humanColor, C: aiColor }
+export function renderBoard(board, colors) {
+  board.forEach((cell, idx) => {
+    const td = document.getElementById(idx)
+    td.style.backgroundColor = colors[cell] || 'transparent'
+  })
+}
 
-// TODO: Implementar a função ShowMessage
-// Esta função deve exibir uma mensagem na interface do usuário.
-// Ela pode ser usada para mostrar mensagens de vitória, derrota ou empate.
-function showMessage(texto){}
+export function showMessage(text) {
+  const overlay = document.querySelector('.overlay')
+  const title   = overlay.querySelector('.modal-title')
+  title.textContent      = text
+  overlay.classList.remove('hidden')
+}
 
-// Função reset
-// Esta função deve redefinir a interface do usuário para o estado inicial.
-function resetUI(){
-  board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-  $("td").css("background-color", "transparent");
+export function hideMessage() {
+  const overlay = document.querySelector('.overlay')
+  overlay.classList.add('hidden')
+}
+
+export function resetUI() {
+  document.querySelectorAll('td').forEach(td => {
+    td.style.backgroundColor = 'transparent'
+  })
+  // escondemos o overlay sempre que recomeçamos
+  hideMessage()
 }
