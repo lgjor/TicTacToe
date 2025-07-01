@@ -4,84 +4,89 @@ Roteiro de implementação do jogo da velha em JavaScript.
 
 ## Organização de Módulos
 
-a) engine.js
-• Estado do tabuleiro (board) e funções puras de lógica:
-(X) getAvailableMoves(board)
-– makeMove(board, index, player)
+A) engine.js
+
+Estado do tabuleiro (board) e funções puras de lógica:
+
+- [x] getAvailableMoves(board)
+- [x] makeMove(board, index, player)
 – checkWin(board) → retorna Status.PLAYING | DRAW | WIN_X | WIN_O
 • Implementação do Minimax:
 – minimax(board, player) → { index, score }
 
+
 b) main.js
-(X)  Inicializa variáveis globais (players, cores, turno atual)
-(X) Conecta handlers de clique a células e botões de opção de cor
-(X) Controla o fluxo: após jogada humana chama Minimax + atualiza tabuleiro
-(X) Lida com fim de jogo (exibe mensagem e bloqueia cliques)
+- [x]  Inicializa variáveis globais (players, cores, turno atual)
+- [x] Conecta handlers de clique a células e botões de opção de cor
+- [x] Controla o fluxo: após jogada humana chama Minimax + atualiza tabuleiro
+- [x] Lida com fim de jogo (exibe mensagem e bloqueia cliques)
 
 c) renderer.js (ou helpers em main.js)
-(X) renderBoard(board) → atualiza DOM (texto, cores, classes .win)
-(X) showMessage(texto) / hideMessage() → exibição de overlay ou alert
-(X) resetUI() → limpa células, esconde mensagens, reativa cliques
+- [x] renderBoard(board) → atualiza DOM (texto, cores, classes .win)
+- [x] showMessage(texto) / hideMessage() → exibição de overlay ou alert
+- [x] resetUI() → limpa células, esconde mensagens, reativa cliques
 
 ## Fluxo Básico de Jogo
 
 Player escolhe cor (white/black) → esconde opções e ativa tabuleiro
 Apresenta turno humano (se “X” começa)
 onCellClick → chama tryHumanMove(index)
-(X) Se jogada válida:
-(X) atualiza estado (makeMove)
-(X) renderiza (renderBoard)
-(X) verifica checkWin → se fim, aborta e exibe resultado
-(X) senão chama computerTurn()
-(X) computerTurn() → chama minimax, faz makeMove, renderiza, verifica fim
+- [x] Se jogada válida:
+- [x] atualiza estado (makeMove)
+- [x] renderiza (renderBoard)
+- [x] verifica checkWin → se fim, aborta e exibe resultado
+- [x] senão chama computerTurn()
+- [x] computerTurn() → chama minimax, faz makeMove, renderiza, verifica fim
 
 ## Etapas de Implementação
 
 ### Etapa 1: Funções de jogo pura
 
 Implementar e testar em console:
-(X) getAvailableMoves
-(X) makeMove (imutável ou mutável, mas consistente)
-(X) checkWin (verifica linhas, colunas, diagonais)
+- [x] getAvailableMoves
+- [x] makeMove (imutável ou mutável, mas consistente)
+- [x] checkWin (verifica linhas, colunas, diagonais)
 Cobrir casos de empate e vitória de cada lado
 
 ### Etapa 2: Fluxo de turnos no main.js
 
 Escrever move(cellElement, player, color) que:
-(X) lê cellElement.id
-(X) chama makeMove no board
-(X) pinta a célula com color e insere símbolo (X/O)
-(X) retorna status do jogo
+- [x] lê cellElement.id
+- [x] chama makeMove no board
+- [x] pinta a célula com color e insere símbolo (X/O)
+- [x] retorna status do jogo
 Controlar alternância entre humanPlayer e aiPlayer
 
 ### Etapa 3: Integração do Minimax
 
 Escrever função minimax(board, player) recursively:
-(X) condição de parada: checkWin ou sem movimentos
-(X) loop em getAvailableMoves
-(X) simula makeMove, chama recursivamente, coleta score
-(X) devolve { index, score } ótimo para o jogador atual
+- [x] condição de parada: checkWin ou sem movimentos
+- [x] loop em getAvailableMoves
+- [x] simula makeMove, chama recursivamente, coleta score
+- [x] devolve { index, score } ótimo para o jogador atual
 Testar no console: garantir que AI nunca perca
 
 ## Etapa 4: Renderização e UI
 
-(X) Refatorar initializeGameHandlers para usar renderBoard e showMessage
-(X) Escrever renderBoard(board) que percorre array e atualiza cada <td>
-(X) Criar overlay/modal simples para mensagem de vitória/derrota/empate
-(X) Botão “Reiniciar” → limpa estado e UI, volta ao início
+- [x] Refatorar initializeGameHandlers para usar renderBoard e showMessage
+- [x] Escrever renderBoard(board) que percorre array e atualiza cada <td>
+- [x] Criar overlay/modal simples para mensagem de vitória/derrota/empate
+- [x] Botão “Reiniciar” → limpa estado e UI, volta ao início
 
 ### Etapa 5: Refinamentos e extras
 
 Placar (wins, losses, draws)
+
 Níveis de dificuldade:
-• Fácil → AI move random
-• Médio → Minimax limitado a profundidade 2
-• Difícil → Minimax completo
-Animações CSS nas células vencedoras (.win com keyframes)
-Undo de último movimento
-Suporte a teclado (setas + Enter)
-Dependências e Priorização
-• Antes de Minimax, garanta que o fluxo humano → render → checkWin funcione 100%.
-• Somente após checkWin robusto, passe para AI básica (random).
-• Só então evolua para Minimax (assegura jogo sempre empatável ou vitória da AI).
-• Por fim, trabalhe em usabilidade (mensagens, placar, animações).
+- [ ] Fácil → AI move random
+- [ ] Médio → Minimax limitado a profundidade 2
+- [ ] Difícil → Minimax completo
+- [ ] Animações CSS nas células vencedoras (.win com keyframes)
+- [ ] Undo de último movimento
+- [ ] Suporte a teclado (setas + Enter)
+
+## Dependências e Priorização
+- [x] Antes de Minimax, garanta que o fluxo humano → render → checkWin funcione 100%.
+- [x] Somente após checkWin robusto, passe para AI básica (random).
+- [x] Só então evolua para Minimax (assegura jogo sempre empatável ou vitória da AI).
+- [ ] Por fim, trabalhe em usabilidade (mensagens, placar, animações).
