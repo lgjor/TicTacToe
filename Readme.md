@@ -1,92 +1,39 @@
-# Tic tac toe - Jogo da velha
+# Jogo da Velha (Tic-Tac-Toe) com IA
 
-Roteiro de implementação do jogo da velha em JavaScript.
+Este é um projeto de Jogo da Velha desenvolvido em JavaScript puro, HTML e CSS. O jogo permite que um jogador humano enfrente uma Inteligência Artificial (IA) com diferentes níveis de dificuldade.
 
-## Organização de Módulos
+## Funcionalidades Implementadas
 
-A) engine.js
+- **Interface Gráfica Completa**: Tabuleiro interativo com design responsivo.
+- **Seleção de Lado**: O jogador pode escolher jogar com as peças brancas ou pretas.
+- **Múltiplos Níveis de Dificuldade**:
+  - **Fácil**: A IA realiza jogadas aleatórias entre as casas disponíveis.
+  - **Normal**: A IA utiliza o algoritmo Minimax com uma profundidade de busca limitada (2 jogadas à frente), oferecendo um desafio moderado.
+  - **Difícil**: A IA utiliza o algoritmo Minimax com profundidade máxima, tornando-a um oponente imbatível.
+- **Lógica de Jogo Robusta**: Detecção automática de vitória, derrota e empate.
+- **Sistema de Fim de Jogo**: Exibição de uma mensagem modal informando o resultado da partida.
+- **Opção de Reiniciar**: Um botão "Play Again" permite reiniciar o jogo, voltando à tela de seleção de cor e dificuldade.
 
-Estado do tabuleiro (board) e funções puras de lógica:
+## Como Jogar
 
-- [x] getAvailableMoves(board)
-- [x] makeMove(board, index, player)
-– checkWin(board) → retorna Status.PLAYING | DRAW | WIN_X | WIN_O
-• Implementação do Minimax:
-– minimax(board, player) → { index, score }
+1. Abra o arquivo `index.html` em um navegador.
+2. Escolha a cor com a qual deseja jogar (branca ou preta).
+3. Selecione o nível de dificuldade da IA (easy, normal, ou hard).
+4. O jogo começará. Clique em uma célula vazia para fazer sua jogada.
+5. O jogo termina quando um jogador vence ou quando todas as células são preenchidas (empate).
+6. Clique em "Play Again" para começar uma nova partida.
 
+## Estrutura do Projeto
 
-b) main.js
-- [x]  Inicializa variáveis globais (players, cores, turno atual)
-- [x] Conecta handlers de clique a células e botões de opção de cor
-- [x] Controla o fluxo: após jogada humana chama Minimax + atualiza tabuleiro
-- [x] Lida com fim de jogo (exibe mensagem e bloqueia cliques)
+O código é modularizado para separar a lógica do jogo da manipulação da interface.
 
-c) renderer.js (ou helpers em main.js)
-- [x] renderBoard(board) → atualiza DOM (texto, cores, classes .win)
-- [x] showMessage(texto) / hideMessage() → exibição de overlay ou alert
-- [x] resetUI() → limpa células, esconde mensagens, reativa cliques
+*   `main.js`: Orquestra o jogo. Gerencia o estado (nível, cor, tabuleiro), captura os eventos do usuário (cliques) e controla o fluxo de turnos entre o jogador e a IA.
+*   `engine/engine.js`: Contém a "inteligência" do jogo. Inclui as funções puras para verificar movimentos disponíveis, realizar jogadas, checar condições de vitória/empate e a implementação do algoritmo Minimax.
+*   `ui/renderer.js`: Responsável por toda a manipulação do DOM. Atualiza a aparência do tabuleiro, exibe e esconde mensagens e reseta a interface visualmente.
+*   `styles/index.css`: Contém todos os estilos para a aparência do jogo, incluindo o layout, cores, fontes e o modal de fim de jogo.
 
-## Fluxo Básico de Jogo
+## Sugestões de Funcionalidades Futuras (Roadmap)
 
-Player escolhe cor (white/black) → esconde opções e ativa tabuleiro
-Apresenta turno humano (se “X” começa)
-onCellClick → chama tryHumanMove(index)
-- [x] Se jogada válida:
-- [x] atualiza estado (makeMove)
-- [x] renderiza (renderBoard)
-- [x] verifica checkWin → se fim, aborta e exibe resultado
-- [x] senão chama computerTurn()
-- [x] computerTurn() → chama minimax, faz makeMove, renderiza, verifica fim
-
-## Etapas de Implementação
-
-### Etapa 1: Funções de jogo pura
-
-Implementar e testar em console:
-- [x] getAvailableMoves
-- [x] makeMove (imutável ou mutável, mas consistente)
-- [x] checkWin (verifica linhas, colunas, diagonais)
-Cobrir casos de empate e vitória de cada lado
-
-### Etapa 2: Fluxo de turnos no main.js
-
-Escrever move(cellElement, player, color) que:
-- [x] lê cellElement.id
-- [x] chama makeMove no board
-- [x] pinta a célula com color e insere símbolo (X/O)
-- [x] retorna status do jogo
-Controlar alternância entre humanPlayer e aiPlayer
-
-### Etapa 3: Integração do Minimax
-
-Escrever função minimax(board, player) recursively:
-- [x] condição de parada: checkWin ou sem movimentos
-- [x] loop em getAvailableMoves
-- [x] simula makeMove, chama recursivamente, coleta score
-- [x] devolve { index, score } ótimo para o jogador atual
-Testar no console: garantir que AI nunca perca
-
-## Etapa 4: Renderização e UI
-
-- [x] Refatorar initializeGameHandlers para usar renderBoard e showMessage
-- [x] Escrever renderBoard(board) que percorre array e atualiza cada <td>
-- [x] Criar overlay/modal simples para mensagem de vitória/derrota/empate
-- [x] Botão “Reiniciar” → limpa estado e UI, volta ao início
-
-### Etapa 5: Refinamentos e extras
-
-Placar (wins, losses, draws)
-
-Níveis de dificuldade:
-- [ ] Fácil → AI move random
-- [ ] Médio → Minimax limitado a profundidade 2
-- [ ] Difícil → Minimax completo
 - [ ] Animações CSS nas células vencedoras (.win com keyframes)
 - [ ] Undo de último movimento
 - [ ] Suporte a teclado (setas + Enter)
-
-## Dependências e Priorização
-- [x] Antes de Minimax, garanta que o fluxo humano → render → checkWin funcione 100%.
-- [x] Somente após checkWin robusto, passe para AI básica (random).
-- [x] Só então evolua para Minimax (assegura jogo sempre empatável ou vitória da AI).
-- [ ] Por fim, trabalhe em usabilidade (mensagens, placar, animações).

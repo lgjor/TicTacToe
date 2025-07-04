@@ -15,7 +15,6 @@ export class Game {
   }
 }
 
-// TODO: Implement the getAvailableMoves function
 // This function should return an array of available moves on the board.
 export function getAvailableMoves(reboard){
     return reboard.filter(s => s != "P" && s != "C");
@@ -53,12 +52,13 @@ export function checkWin(board) {
 }
 
 // Minimax puro. player = quem fará o próximo nó.
-// aiPlayer, huPlayer são passados para pontuar corretamente
-export function minimax(board, player, aiPlayer, humanPlayer) {
+// aiPlayer, humanPlayer são passados para pontuar corretamente
+export function minimax(board, player, aiPlayer, humanPlayer, depth) {
   const avail = getAvailableMoves(board);
   const state = checkWin(board);
 
-  if (state !== Status.PLAYING) {
+  // Condição de parada: profundidade atingida ou fim de jogo
+  if (depth === 0 || state !== Status.PLAYING) {
     // pontuação SEM depender de `player`
     if (state === Status.WIN_C) return { score: +10 }
     if (state === Status.WIN_P) return { score: -10 }
@@ -71,7 +71,7 @@ export function minimax(board, player, aiPlayer, humanPlayer) {
     board[idx] = player;
 
     const nextPlayer = player === aiPlayer ? humanPlayer : aiPlayer;
-    const result     = minimax(board, nextPlayer, aiPlayer, humanPlayer);
+    const result     = minimax(board, nextPlayer, aiPlayer, humanPlayer, depth - 1);
     move.score       = result.score;
 
     board[idx] = move.index;

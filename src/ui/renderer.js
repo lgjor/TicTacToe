@@ -20,8 +20,13 @@ export function hideMessage() {
 
 export function resetUI() {
   document.querySelectorAll('td').forEach(td => {
-    td.style.backgroundColor = 'transparent'
+    td.style.backgroundColor = 'white'
   })
+  const levels = document.querySelectorAll('.level');
+      levels.forEach(l => {
+          l.style.display = 'block';
+          l.style.backgroundColor = '';
+      });
   // escondemos o overlay sempre que recomeçamos
   hideMessage()
 }
