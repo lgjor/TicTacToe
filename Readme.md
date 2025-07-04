@@ -1,6 +1,10 @@
 # Jogo da Velha (Tic-Tac-Toe) com IA
 
-<img src="./github/preview.jpg" alt="Jogo da Velha">
+<p align="center">
+  <a href="https://lgjor.github.io/TicTacToe/" target="_blank">
+    <img src=".github/preview.jpg" width="100%" alt="Jogo da velha com 3 níveis de dificuldade">
+  </a>
+</p>
 
 Este é um projeto de Jogo da Velha desenvolvido em JavaScript puro, HTML e CSS. O jogo permite que um jogador humano enfrente uma Inteligência Artificial (IA) com diferentes níveis de dificuldade.
 
