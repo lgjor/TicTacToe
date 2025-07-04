@@ -22,12 +22,16 @@ Este é um projeto de Jogo da Velha desenvolvido em JavaScript puro, HTML e CSS.
 
 ## Como Jogar
 
-1. Abra o arquivo `index.html` em um navegador.
-2. Escolha a cor com a qual deseja jogar (branca ou preta).
-3. Selecione o nível de dificuldade da IA (easy, normal, ou hard).
-4. O jogo começará. Clique em uma célula vazia para fazer sua jogada.
-5. O jogo termina quando um jogador vence ou quando todas as células são preenchidas (empate).
-6. Clique em "Play Again" para começar uma nova partida.
+Acesse <a href="https://lgjor.github.io/TicTacToe/" target="_blank">https://lgjor.github.io/TicTacToe/</a> e teste agora mesmo.
+
+Ou se preferir, faça o clone do projeto e abra o `index.html` no navegador.
+
+Como jogar:
+0. Escolha a cor com a qual deseja jogar (branca ou preta).
+1. Selecione o nível de dificuldade da IA (easy, normal, ou hard).
+2. O jogo começará. Clique em uma célula vazia para fazer sua jogada.
+3. O jogo termina quando um jogador vence ou quando todas as células são preenchidas (empate).
+4. Clique em "Play Again" para começar uma nova partida.
 
 ## Estrutura do Projeto
 
