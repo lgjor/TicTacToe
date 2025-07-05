@@ -6,7 +6,7 @@
   </a>
 </p>
 
-Este é um projeto de Jogo da Velha desenvolvido em JavaScript puro, HTML e CSS. O jogo permite que um jogador humano enfrente uma Inteligência Artificial (IA) com diferentes níveis de dificuldade.
+Este é um projeto de Jogo da Velha desenvolvido em JavaScript, HTML e CSS. O jogo permite que um jogador humano enfrente uma Inteligência Artificial (IA) com diferentes níveis de dificuldade.
 
 ## Funcionalidades Implementadas
 
