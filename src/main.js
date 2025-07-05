@@ -1,14 +1,8 @@
-import {
-  Status,
-  makeMove,
-  checkWin,
-  minimax
-} from './engine/engine.js'
+import { Game, Status } from './engine/engine.js'
 import { renderBoard, showMessage, hideMessage, resetUI } from './ui/renderer.js'
 
-let board;
-const humanPlayer = 'P';
-const aiPlayer    = 'C';
+const appContainer = document.querySelector('.app');
+const game = new Game('P', 'C'); // Instância única do jogo
 const AI_DELAY    = 500;
 let huColor, aiColor;
 let gameLevel;
@@ -51,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function chooseLevel(level) {
     gameLevel = level;
+    game.setDifficulty(level.toLowerCase()); // Define a dificuldade na instância do jogo
     isGameLevel = true;
     pChooseLevel.innerText = `Level selected: ${level}`;
 
@@ -66,90 +61,69 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function resetGame() {
-    // Reseta o estado do jogo
+    game.reset(); // Reseta o estado do jogo
+    appContainer.classList.remove('game-started');
     isColorChosen = false;
     isGameLevel = false;
-    board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
     // Reseta a UI para o estado inicial
     pChooseLevel.innerText = 'Select level';
     introText.style.visibility = 'visible';
     options.style.visibility = 'visible';
 
-    document.querySelectorAll('.level').forEach(l => {
-      l.style.display = 'block';
-      l.style.backgroundColor = '';
-    });
-
-    resetUI(); // Limpa o conteúdo das células e esconde o modal de fim de jogo
+    document.body.style.pointerEvents = 'auto'; // Garante que os cliques estejam liberados
+    resetUI(); // Limpa o modal de fim de jogo
+    renderBoard(game.board, { P: huColor, C: aiColor }); // Limpa o tabuleiro
   }
 
   function startGame() {
      if (!isGameLevel || !isColorChosen) return;
-      board = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-      renderBoard(board, { P: huColor, C: aiColor });
+     appContainer.classList.add('game-started');
+      game.reset();
+      renderBoard(game.board, { P: huColor, C: aiColor });
+      hideMessage();
   }  
 
   function onCellClick(e) {
-    // Impede o clique se o jogo não começou (cor e nível não escolhidos)
-    if (!isGameLevel || !isColorChosen) return;
+    // A classe Game já impede a jogada se não for a vez do jogador.
+    // Apenas verificamos se o jogo já começou.
+    if (!isGameLevel || !isColorChosen || game.status !== Status.PLAYING) return;
 
     const idx = Number(e.currentTarget.id);
-    // 1) bloqueia célula ocupada
-    if (typeof board[idx] !== 'number') return;
+    
+    // 1. Tenta a jogada do jogador
+    const madeMove = game.playerMove(idx); // Renomeado para consistência
 
-    // 2) tenta a jogada humana
-    const statusH = humanMove(idx);
-    if (statusH == null) return;   // jogada inválida → sem nada
+    // Se a jogada não foi válida (célula ocupada ou não é a vez do jogador), não faz nada
+    if (!madeMove) return;
 
-    if (statusH !== Status.PLAYING) return;   // vitória/empate no humano
+    // 2. Atualiza a UI com a jogada do jogador
+    renderBoard(game.board, { P: huColor, C: aiColor });
 
-    // 3) faz a IA jogar
-    aiMove();
-  }
-
-  function humanMove(idx) {
-    board = makeMove(board, idx, humanPlayer);
-    renderBoard(board, { P: huColor, C: aiColor });
-
-    const status = checkWin(board);
-    if (status !== Status.PLAYING) {
-      endGame(status);
+    // 3. Verifica o status do jogo após a jogada do jogador
+    if (game.status !== Status.PLAYING) {
+      endGame(game.status);
+      return; // O jogo acabou, não chama a IA
     }
-    return status;
+
+    // 4. Dispara a jogada da IA com um atraso
+    triggerAiMove();
   }
 
-  function aiMove() {
-      setTimeout(() => {
-          let aiIdx;
-          if (gameLevel === 'easy') {
-              // Jogada aleatória para o nível fácil
-              const availableMoves = board.filter(s => typeof s === 'number');
-              aiIdx = availableMoves[Math.floor(Math.random() * availableMoves.length)];
-          } else {
-              let depth;
-              if (gameLevel === 'normal') {
-                  depth = 2;
-              } else {
-                  depth = 9;  // Profundidade máxima para o nível difícil (ou qualquer valor padrão)
-              }
-              const { index } = minimax(
-                  board,
-                  aiPlayer,
-                  aiPlayer,
-                  humanPlayer,
-                  depth
-              );
-              aiIdx = index;
-          }
-          board = makeMove(board, aiIdx, aiPlayer);
-          renderBoard(board, { P: huColor, C: aiColor });
+  function triggerAiMove(){
+    // Bloqueia a interface para impedir cliques enquanto a IA "pensa"
+    document.body.style.pointerEvents = 'none';
 
-      const status = checkWin(board);
+    setTimeout(() => {
+      // A classe Game agora lida com a dificuldade internamente.
+      game.aiMove();
+      renderBoard(game.board, { P: huColor, C: aiColor });
+      document.body.style.pointerEvents = 'auto'; // Libera a interface
+      const status = game.status;
       if (status !== Status.PLAYING) {
         endGame(status);
       }
-    }, AI_DELAY)
+    }, AI_DELAY);
   }
 
   function endGame(status) {

@@ -1,8 +1,13 @@
 // recebe um map de cores por símbolo: { P: humanColor, C: aiColor }
 export function renderBoard(board, colors) {
+  const appContainer = document.querySelector('.app');
+  const gameStarted = appContainer.classList.contains('game-started');
+
   board.forEach((cell, idx) => {
     const td = document.getElementById(idx)
-    td.style.backgroundColor = colors[cell] || 'transparent'
+    // Se a célula estiver ocupada, usa a cor do jogador.
+    // Se estiver vazia, a cor de fundo depende se o jogo começou ou não.
+    td.style.backgroundColor = colors[cell] || (gameStarted ? 'transparent' : 'white');
   })
 }
 
@@ -19,9 +24,6 @@ export function hideMessage() {
 }
 
 export function resetUI() {
-  document.querySelectorAll('td').forEach(td => {
-    td.style.backgroundColor = 'white'
-  })
   const levels = document.querySelectorAll('.level');
       levels.forEach(l => {
           l.style.display = 'block';
