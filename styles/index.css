@@ -34,14 +34,20 @@ html, body {
 /* -----------------------------------
    TÍTULO DO JOGO 
 ----------------------------------- */
-.app h1 {
+.app h1, h2 {
   font-family: "Press Start 2P", system-ui; /* Fonte estilo retro-game */
   font-size: 1.5rem;                    /* Tamanho ajustado para a fonte pixelada */
   color: #333;                       /* Um cinza escuro, mais suave que o preto puro */
   text-align: center;                 /* Centraliza o título */
-  margin-bottom: 2rem;                /* Cria um espaço abaixo do título, antes do tabuleiro */
   text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2); /* Sombra dura para um efeito 8-bit */
   line-height: 1.4;                   /* Melhora a legibilidade se o título quebrar em duas linhas */
+}
+
+.app h2 {
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  color: #333;                 /* Cria um espaço abaixo do título, antes do tabuleiro */
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2); /* Sombra dura para um efeito 8-bit */
 }
 
 /* -----------------------------------
